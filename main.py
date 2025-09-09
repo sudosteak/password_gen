@@ -1,13 +1,20 @@
 import random
 
 def gen_words(infile):
-    word1 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    word2 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    word3 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    word4 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    word5 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    word6 = random.choice(open(infile).read().split('\n')) + random.randrange(0, 9)
-    generated_words = word1+"-"+word2+"-"+word3+"-"+word4+"-"+word5+"-"+word6
+    try:
+        n = int(input("how many words: "))
+    except ValueError or n < 1:
+        print("invalid input. please enter a positive integer above 1")
+        return  
+    
+    words = []
+    wordlist = open(infile).read().split('\n')
+    
+    for _ in range(n):
+        word = random.choice(wordlist) + str(random.randrange(0, 9))
+        words.append(word)
+    
+    generated_words = '-'.join(words)
     return generated_words
 
 def pass_gen():
