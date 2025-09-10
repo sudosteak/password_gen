@@ -1,24 +1,9 @@
-import random
+from passwd_gen import gen_passwd
 
-def gen_words(infile):
-    try:
-        n = int(input("how many words: "))
-    except ValueError or n < 1:
-        print("invalid input. please enter a positive integer above 1")
-        return  
-    
-    words = []
-    wordlist = open(infile).read().split('\n')
-    
-    for _ in range(n):
-        word = random.choice(wordlist) + str(random.randrange(0, 9))
-        words.append(word)
-    
-    generated_words = '-'.join(words)
-    return generated_words
-
-def pass_gen():
+def passwd_gen():
     infile = "./assets/wordlist.txt"
-    print(gen_words(infile))
+    print(gen_passwd(infile))
 
-pass_gen()
+passwd_gen()
+#-- add gui
+#-- add username gen
