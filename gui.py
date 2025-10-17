@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import tkinter as tk
 from tkinter import ttk
-from passwd_gen import gen_passwd
+import random
 import os
 
 class PasswordGeneratorGUI:
@@ -10,6 +10,15 @@ class PasswordGeneratorGUI:
         self.root.title("Password Generator")
         self.root.geometry("500x300")
         self.root.resizable(False, False)
+        
+        # Load wordlist once during initialization
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        wordlist_path = os.path.join(script_dir, "assets", "wordlist.txt")
+        try:
+            with open(wordlist_path) as f:
+                self.wordlist = f.read().split('\n')
+        except FileNotFoundError:
+            self.wordlist = []
         
         # Configure style
         style = ttk.Style()
@@ -57,25 +66,22 @@ class PasswordGeneratorGUI:
         self.copy_button.pack(pady=(0, 10))
     
     def generate_password(self):
-        """Generate a password using the passwd_gen module"""
+        """Generate a password using the same logic as passwd_gen"""
         try:
             num_words = int(self.num_words_var.get())
             if num_words < 1:
                 self.display_password("Error: Please enter a positive number")
                 return
             
-            # Get the wordlist path
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            wordlist_path = os.path.join(script_dir, "assets", "wordlist.txt")
+            # Check if wordlist is loaded
+            if not self.wordlist:
+                self.display_password("Error: Wordlist file not found")
+                return
             
-            # Generate password using modified logic from passwd_gen
-            import random
+            # Generate password
             words = []
-            with open(wordlist_path) as f:
-                wordlist = f.read().split('\n')
-            
             for _ in range(num_words):
-                word = random.choice(wordlist) + str(random.randrange(0, 9))
+                word = random.choice(self.wordlist) + str(random.randrange(0, 10))
                 words.append(word)
             
             password = '-'.join(words)
@@ -84,8 +90,6 @@ class PasswordGeneratorGUI:
             
         except ValueError:
             self.display_password("Error: Please enter a valid number")
-        except FileNotFoundError:
-            self.display_password("Error: Wordlist file not found")
         except Exception as e:
             self.display_password(f"Error: {str(e)}")
     
