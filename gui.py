@@ -16,7 +16,7 @@ class PasswordGeneratorGUI:
         wordlist_path = os.path.join(script_dir, "assets", "wordlist.txt")
         try:
             with open(wordlist_path) as f:
-                self.wordlist = [word for word in f.read().split('\n') if word.strip()]
+                self.wordlist = [word.strip() for word in f.read().split('\n') if word.strip()]
         except FileNotFoundError:
             self.wordlist = []
         
@@ -81,7 +81,7 @@ class PasswordGeneratorGUI:
             # Generate password
             words = []
             for _ in range(num_words):
-                # Note: Using randrange(0, 10) to include all digits 0-9
+                # Note: Using randrange(0, 10) generates digits 0-9 (10 is excluded)
                 word = random.choice(self.wordlist) + str(random.randrange(0, 10))
                 words.append(word)
             
