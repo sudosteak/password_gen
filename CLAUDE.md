@@ -42,3 +42,4 @@ username = gen_usr("./assets/wordlist.txt")
 - Input validation exists in passwd_gen.py but has a bug: line 6 uses `or` instead of proper exception handling
 - Both generators append numbers to words: passwd_gen uses 0-8, usr_gen uses 0-9998
 - The main.py script runs interactively and doesn't support CLI arguments yet (per TODO list)
+Always use context7 when I need code generation, setup or configuration steps, or library/API documentation. This means you should automatically use the Context7 MCP tools to resolve library id and get library docs without me having to explicitly ask.
